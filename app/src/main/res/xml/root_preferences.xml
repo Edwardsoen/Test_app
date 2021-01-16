@@ -1,0 +1,35 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <PreferenceCategory android:title="Preference category">
+
+    </PreferenceCategory>
+    <ListPreference
+        android:id="@+id/Delete_preference"
+        android:defaultValue="1"
+        android:entries="@array/Activities"
+        android:entryValues="@array/Activities_val"
+        android:key="Delete_preference"
+        android:title="List preference" />
+    <PreferenceCategory app:title="@string/sync_header">
+
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:title="@string/sync_title" />
+
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="attachment"
+            app:summaryOff="@string/attachment_summary_off"
+            app:summaryOn="@string/attachment_summary_on"
+            app:title="@string/attachment_title" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="switch_preference_1"
+            app:title="@string/dark_mode"
+            android:title="Switch preference" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
