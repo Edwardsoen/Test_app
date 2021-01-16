@@ -51,6 +51,15 @@ public class Activity_manager {
         final AlertDialog dialogg = dialog.create();
 
 
+        customize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = radio_name_id_map.get(radiogroup.getCheckedRadioButtonId());
+                CustomizeLayout c = new CustomizeLayout(context, title);
+                c.generateLayout();
+            }
+        });
+
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

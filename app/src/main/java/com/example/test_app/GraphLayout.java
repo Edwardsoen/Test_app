@@ -59,7 +59,6 @@ public class GraphLayout {
     }
 
     public  void createWeeklyLayout(Integer year, Integer month, Integer startDate, Integer endDate) {
-
         LayoutInflater inflater = LayoutInflater.from(context);
         ConstraintLayout card = (ConstraintLayout) inflater.inflate(R.layout.dialoggraph2, null, false);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -49,10 +50,7 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         prefs = getContext().getSharedPreferences("Main_data", Context.MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
 //        Toast.makeText(getContext(), "Creatd", Toast.LENGTH_LONG).show();
-
         return inflater.inflate(R.layout.fragment_first, container, false);
-
-
     }
 
 
@@ -63,7 +61,6 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public MaterialCardView create_card(final Context context, final String title){
         final GraphLayout GraphLayout = new GraphLayout(context, title);
-
         LayoutInflater inflater = getLayoutInflater();
         ConstraintLayout card_layout = (ConstraintLayout) inflater.inflate(R.layout.card, null, false);
         final LinearLayout data_layout = card_layout.findViewById(R.id.data_layout);
@@ -98,11 +95,24 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         TextView title_tv = card_layout.findViewById(R.id.textView17);
         title_tv.setText(title);
         final MaterialCardView card = new MaterialCardView(context);
+        int id = View.generateViewId();
+        String sharedPrefName = "cardIdMap";
+        CrudOperations.save_data(title, id, sharedPrefName, context);
+        card.setId(id);
+
+
+
         card.addView(card_layout);
         card.setClickable(true);
-        card.setFocusable(true);
         card.setCheckable(true);
-        card.setElevation(100f);
+
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, card.getParent().getParent().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+        card.setElevation(100000f);
         return card;
     }
 
@@ -116,7 +126,11 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
     public int add_card(String title, LinearLayout lin){
         MaterialCardView card = create_card(getContext(), title);
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout b = new LinearLayout(getContext());
+        ViewGroup.LayoutParams lp2 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+        lin.setId(123123123);
         lin.addView(card, lp);
+        lin.addView(b, lp2);
         int ids = card.getId();
         return ids;
     }
@@ -141,8 +155,6 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
             map.put(entry.getKey(), id);
         }
         scrollView.addView(lin, lp);
-
-
     }
 
 

@@ -7,9 +7,9 @@ import java.util.Map;
 
 public class CrudOperations {
 
-    public static void save_data(String key, int hour, String Shared_pref_name, Context context){
+    public static void save_data(String key, int value, String Shared_pref_name, Context context){
         SharedPreferences.Editor editor = context.getSharedPreferences(Shared_pref_name, Context.MODE_PRIVATE).edit();
-        editor.putInt(key, hour);
+        editor.putInt(key, value);
         editor.commit();
     }
 
