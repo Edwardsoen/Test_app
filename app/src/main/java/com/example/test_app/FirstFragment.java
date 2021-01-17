@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -127,9 +128,14 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public int add_card(String title, LinearLayout lin){
         MaterialCardView card = create_card(getContext(), title);
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        CardView.LayoutParams lp = new CardView.LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(50, 0, 50, 0);
         LinearLayout b = new LinearLayout(getContext());
-        ViewGroup.LayoutParams lp2 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+        ViewGroup.LayoutParams lp2 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100); //100pixel gap
+        card.setElevation(8f);
+
+
         lin.addView(card, lp);
         lin.addView(b, lp2);
         int ids = card.getId();
