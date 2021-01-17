@@ -110,7 +110,7 @@ public class Activity_manager {
                     else {
                         String title = radio_name_id_map.get(radiogroup.getCheckedRadioButtonId());
                         createDeleteDataAlertDialog(context, title);
-                        CrudOperations.delete_data(title, "Main_data", context);
+                        CrudOperations.deleteData(title, "Main_data", context);
                         dialogg.dismiss();
                     }
             }
@@ -183,7 +183,7 @@ public class Activity_manager {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int hours =Integer.parseInt(numberPicker.getText().toString());
-                CrudOperations.save_data(activity, hours, pref_name, context);
+                CrudOperations.saveIntData(activity, hours, pref_name, context);
 
             }
         });
@@ -231,7 +231,7 @@ public class Activity_manager {
                 Editable t = text.getText();
                 if(isNumber){ //if edit amount
                     try{
-                    CrudOperations.save_data(title, Integer.valueOf(t.toString()),  "Main_data", context);
+                    CrudOperations.saveIntData(title, Integer.valueOf(t.toString()),  "Main_data", context);
                     Toast.makeText(context, t.toString(), Toast.LENGTH_LONG).show();
                     }catch (Exception e){
                         Toast.makeText(context, "Cannot be empty", Toast.LENGTH_LONG).show();
@@ -242,9 +242,9 @@ public class Activity_manager {
                     } else{
                     SQLFunctions sqlFunctions = new SQLFunctions(context);
                     sqlFunctions.renameSQL(t.toString(), title);
-                    Integer i = CrudOperations.read_data(title, "Main_data", context);
-                    CrudOperations.delete_data(title, "Main_data", context);
-                    CrudOperations.save_data(t.toString(), i, "Main_data", context);
+                    Integer i = CrudOperations.readIntData(title, "Main_data", context);
+                    CrudOperations.deleteData(title, "Main_data", context);
+                    CrudOperations.saveIntData(t.toString(), i, "Main_data", context);
                     Toast.makeText(context, t.toString(), Toast.LENGTH_LONG).show();
                 }
 

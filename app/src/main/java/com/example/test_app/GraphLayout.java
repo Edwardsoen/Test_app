@@ -48,14 +48,16 @@ public class GraphLayout {
     SQLFunctions SQLFunctions;
     DateClass dateClass;
     Integer daily_target;
+    String sharedPreferenceName;
 
 
     GraphLayout(final Context context,final String title){
+        this.sharedPreferenceName = "graphConfig";
         this.context = context;
         this.title = title;
         this.SQLFunctions = new SQLFunctions(context);
         this.dateClass = new DateClass();
-        this.daily_target = CrudOperations.read_data(title,"Main_data", context);
+        this.daily_target = CrudOperations.readIntData(title,"Main_data", context);
     }
 
     public  void createWeeklyLayout(Integer year, Integer month, Integer startDate, Integer endDate) {
@@ -98,6 +100,8 @@ public class GraphLayout {
         barchart.setScaleXEnabled(false);
         barchart.setScaleYEnabled(false);
         barchart.setPinchZoom(false);
+
+
 
 
         BarDataSet barDataSet = new BarDataSet(entries, "labels");
@@ -221,9 +225,23 @@ public class GraphLayout {
         lineChart.setScaleYEnabled(false);
         lineChart.setPinchZoom(false);
 
-        LineDataSet barDataSet = new LineDataSet(entries, "labels");
-        final LineData barData = new LineData(barDataSet);
-        lineChart.setData(barData);
+        String lineColor = getMonthlyGraphgCongfig();
+
+        lineChart.getAxisLeft().setTextColor(Color.parseColor(lineColor)); // left y-axis
+        lineChart.getXAxis().setTextColor(Color.parseColor(lineColor));
+        lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
+        lineChart.getAxisRight().setTextColor(Color.parseColor(lineColor));
+        lineChart.getDescription().setTextColor(Color.parseColor(lineColor));
+        lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
+
+
+
+        LineDataSet lineDataSet = new LineDataSet(entries, "labels");
+        final LineData lineData = new LineData(lineDataSet);
+
+        lineData.setValueTextColor(Color.parseColor(lineColor));
+        lineData.setValueTextSize(12f);
+        lineChart.setData(lineData);
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
@@ -253,6 +271,29 @@ public class GraphLayout {
         return lin;
     }
 
+    private String getMonthlyGraphgCongfig(){
+        String text = title + "textMonthlyGraphColor";
+        String textConfig =  CrudOperations.readStringData(text, sharedPreferenceName, context);
+        if (textConfig == null){
+            CrudOperations.SaveStringData(text, "#000000", sharedPreferenceName, context);
+            textConfig =  CrudOperations.readStringData(text, sharedPreferenceName, context);
+        }
+        return textConfig;
+    }
+
+
+
+
+    private String getWeekGraphConfig(){
+        String text = title + "textWeeklyGraphColor";
+        String textConfig =  CrudOperations.readStringData(text, sharedPreferenceName, context);
+        if (textConfig == null){
+            CrudOperations.SaveStringData(text, "#000000", sharedPreferenceName, context);
+            textConfig =  CrudOperations.readStringData(text, sharedPreferenceName, context);
+        }
+        return textConfig;
+    }
+
 
     public void createPopupGraph(ArrayList<String> monthLabel, Integer xPressed){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -269,6 +310,9 @@ public class GraphLayout {
         lineChart.setScaleXEnabled(false);
         lineChart.setScaleYEnabled(false);
         lineChart.setPinchZoom(false);
+
+
+
 
 
 
@@ -304,8 +348,23 @@ public class GraphLayout {
             }
 
 
+
+
+            String lineColor = getMonthlyGraphgCongfig();
+
+            lineChart.getAxisLeft().setTextColor(Color.parseColor(lineColor)); // left y-axis
+            lineChart.getXAxis().setTextColor(Color.parseColor(lineColor));
+            lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
+            lineChart.getAxisRight().setTextColor(Color.parseColor(lineColor));
+            lineChart.getDescription().setTextColor(Color.parseColor(lineColor));
+            lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
+
             LineDataSet lineDataSet = new LineDataSet(entries, "labels");
             final LineData lineData = new LineData(lineDataSet);
+
+            lineData.setValueTextSize(12f);
+            lineData.setValueTextColor(Color.parseColor(lineColor));
+
             lineChart.setData(lineData);
             ValueFormatter formatter = new ValueFormatter() {
                 @Override
@@ -379,6 +438,9 @@ public class GraphLayout {
         LinearLayout lin = new LinearLayout(context);
         ViewGroup.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         PieChart pieChart = new PieChart(context);
+        pieChart.setHoleRadius(0);
+
+        pieChart.setDrawSliceText(false);
         ArrayList<PieEntry> entries = new ArrayList<>();
 
         HashMap<String, Long> range = DateClass.get_range(year, month, 1, year, month, dayInAMonth);
@@ -420,6 +482,10 @@ public class GraphLayout {
             }
         }
 
+
+        String textColor = getWeekGraphConfig();
+        pieChart.getDescription().setTextColor(Color.parseColor(textColor));
+        pieChart.getLegend().setTextColor(Color.parseColor(textColor));
 
 
 
@@ -467,7 +533,10 @@ public class GraphLayout {
         PieDataSet set = new PieDataSet(entries, monthName); //TODO: CHANGE TO UNIT
         set.setColors(colors);
         PieData data = new PieData(set);
+        data.setValueTextSize(13f);
+        data.setValueTextColor(Color.parseColor(textColor));
         pieChart.setData(data);
+
 
         lin.addView(pieChart, lp);
         return  lin;

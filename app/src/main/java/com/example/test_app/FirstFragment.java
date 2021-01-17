@@ -2,6 +2,7 @@ package com.example.test_app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -28,11 +28,11 @@ import static android.widget.LinearLayout.VERTICAL;
 public class FirstFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
 
-    public SharedPreferences prefs;
+    private SharedPreferences prefs;
     private ViewGroup.LayoutParams lp;
     private LinearLayout lin;
     private ScrollView scrollView;
-
+    private  SharedPreferences configPrefs;
 
 
     public FirstFragment(){
@@ -49,8 +49,14 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         // Inflate the layout for this fragment
         prefs = getContext().getSharedPreferences("Main_data", Context.MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
-//        Toast.makeText(getContext(), "Creatd", Toast.LENGTH_LONG).show();
+        configPrefs = getContext().getSharedPreferences("cardConfig", Context.MODE_PRIVATE);
+        configPrefs.registerOnSharedPreferenceChangeListener(this);
+        SharedPreferences graphConfigPrefs = getContext().getSharedPreferences("graphConfig", Context.MODE_PRIVATE);
+        graphConfigPrefs.registerOnSharedPreferenceChangeListener(this);
+//        configPrefs.registerOnSharedPreferenceChangeListener( );
+
         return inflater.inflate(R.layout.fragment_first, container, false);
+
     }
 
 
@@ -66,6 +72,7 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         final LinearLayout data_layout = card_layout.findViewById(R.id.data_layout);
         data_layout.addView(GraphLayout.createMonthlyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         TabLayout tablayout = card_layout.findViewById(R.id.tabLayout);
+
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -92,27 +99,22 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
             }
         });
 
+
         TextView title_tv = card_layout.findViewById(R.id.textView17);
         title_tv.setText(title);
         final MaterialCardView card = new MaterialCardView(context);
-        int id = View.generateViewId();
-        String sharedPrefName = "cardIdMap";
-        CrudOperations.save_data(title, id, sharedPrefName, context);
-        card.setId(id);
-
-
-
         card.addView(card_layout);
         card.setClickable(true);
         card.setCheckable(true);
+        card.setFocusable(true);
+        HashMap<String, Integer> colorMap = readCardConfig(context, title);
+        tablayout.setBackgroundColor(colorMap.get("bg"));
+        card.setBackgroundColor(colorMap.get("bg"));
+        tablayout.setSelectedTabIndicatorColor(colorMap.get("accent"));
+        tablayout.setTabTextColors(colorMap.get("text"), colorMap.get("accent"));
+        title_tv.setTextColor(colorMap.get("text"));
 
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, card.getParent().getParent().toString(), Toast.LENGTH_LONG).show();
-            }
-        });
-        card.setElevation(100000f);
+
         return card;
     }
 
@@ -128,7 +130,6 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout b = new LinearLayout(getContext());
         ViewGroup.LayoutParams lp2 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
-        lin.setId(123123123);
         lin.addView(card, lp);
         lin.addView(b, lp2);
         int ids = card.getId();
@@ -144,11 +145,7 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         scrollView = view.findViewById(R.id.ScrollView);
         final ConstraintLayout mainlayout = view.findViewById(R.id.main_cons);
-
-
         final HashMap<String, Integer> map = new HashMap<>();
-
-
         Map<String, Integer> data = (Map<String, Integer>) prefs.getAll();
         for (Map.Entry<String, Integer> entry : data.entrySet()) {
             int id = add_card(entry.getKey(), lin);
@@ -160,14 +157,48 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        sharedPreferences = getContext().getSharedPreferences("Main_data", Context.MODE_PRIVATE);
         scrollView.removeAllViews();
         lin.removeAllViews();
         Map<String, Integer> data = (Map<String, Integer>) sharedPreferences.getAll();
         for (Map.Entry<String, Integer> entry : data.entrySet()) {
             add_card(entry.getKey(), lin);
         }
+//        Toast.makeText(getContext(), , Toast.LENGTH_LONG).show();
         scrollView.addView(lin, lp);
+    }
 
+
+
+
+    private static void generateDefaultCardConfig(Context context, String title){
+        String sharedPrefName = "cardConfig";
+        String bgKey = title + "_bg";
+        String textKey = title + "_text";
+        String accentKey = title + "_accent";
+        CrudOperations.SaveStringData(bgKey,"#ffffff",sharedPrefName,context);
+        CrudOperations.SaveStringData(textKey,"#000000",sharedPrefName,context);
+        CrudOperations.SaveStringData(accentKey,"#000099",sharedPrefName,context);
+    }
+
+
+    private static HashMap<String, Integer> readCardConfig(Context context, String title){
+        HashMap<String, Integer> data = new HashMap<>();
+        String sharedPrefName = "cardConfig";
+        String bgKey = title + "_bg";
+        String textKey = title + "_text";
+        String accentKey = title + "_accent";
+        String bgHex = CrudOperations.readStringData(bgKey, sharedPrefName, context);
+        if(bgHex == null){
+            generateDefaultCardConfig(context, title);
+            bgHex = CrudOperations.readStringData(bgKey, sharedPrefName, context);
+        }
+        String accentHex = CrudOperations.readStringData(accentKey, sharedPrefName, context);
+        String textHex = CrudOperations.readStringData(textKey, sharedPrefName, context);
+        data.put("bg", Color.parseColor(bgHex));
+        data.put("text", Color.parseColor(textHex));
+        data.put("accent",Color.parseColor( accentHex));
+        return data;
 
     }
 }

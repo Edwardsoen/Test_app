@@ -16,6 +16,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:longClickable="true"
             app:cardPreventCornerOverlap="true">
 
             <LinearLayout
@@ -35,7 +37,18 @@
                     android:id="@+id/aa"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:orientation="horizontal" />
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/cardtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:gravity="center_vertical"
+                        android:text="@string/CardTextColor" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
