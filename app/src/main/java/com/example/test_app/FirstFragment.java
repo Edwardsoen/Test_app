@@ -67,23 +67,33 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public MaterialCardView create_card(final Context context, final String title){
-        final GraphLayout GraphLayout = new GraphLayout(context, title);
+
+
+
+
+        final DayGraph dayGraph = new DayGraph(context, title);
+        final MonthGraph monthGraph = new MonthGraph(context, title);
+        final WeekGraph weekGraph = new WeekGraph(context, title);
+
+
+
         LayoutInflater inflater = getLayoutInflater();
         ConstraintLayout card_layout = (ConstraintLayout) inflater.inflate(R.layout.card, null, false);
         final LinearLayout data_layout = card_layout.findViewById(R.id.data_layout);
-        data_layout.addView(GraphLayout.createMonthlyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        data_layout.addView(dayGraph.createDailyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         TabLayout tablayout = card_layout.findViewById(R.id.tabLayout);
+
 
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch(tab.getPosition()){ //TODO: CHANGE LAYOUT TO NON-STATIC
                     case 0:
-                        data_layout.addView(GraphLayout.createMonthlyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        data_layout.addView(dayGraph.createDailyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     case 1:
-                        data_layout.addView(GraphLayout.createDailyLayout(null, null, null ), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        data_layout.addView(weekGraph.createWeeklyLayout2(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     case 2:
-                        data_layout.addView(GraphLayout.createWeeklyLayout2(null,  null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        data_layout.addView(monthGraph.createMonthlyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         //data_layout.addView(GraphLayout.createWeeklyLayout(new HashMap<String, Integer>()), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 }
             }
@@ -108,12 +118,14 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         card.setClickable(true);
         card.setCheckable(true);
         card.setFocusable(true);
-        HashMap<String, Integer> colorMap = readCardConfig(context, title);
-        tablayout.setBackgroundColor(colorMap.get("bg"));
-        card.setBackgroundColor(colorMap.get("bg"));
-        tablayout.setSelectedTabIndicatorColor(colorMap.get("accent"));
-        tablayout.setTabTextColors(colorMap.get("text"), colorMap.get("accent"));
-        title_tv.setTextColor(colorMap.get("text"));
+
+//
+//        HashMap<String, Integer> colorMap = readCardConfig(context, title);
+//        tablayout.setBackgroundColor(colorMap.get("bg"));
+//        card.setBackgroundColor(colorMap.get("bg"));
+//        tablayout.setSelectedTabIndicatorColor(colorMap.get("accent"));
+//        tablayout.setTabTextColors(colorMap.get("text"), colorMap.get("accent"));
+//        title_tv.setTextColor(colorMap.get("text"));
 
 
         return card;

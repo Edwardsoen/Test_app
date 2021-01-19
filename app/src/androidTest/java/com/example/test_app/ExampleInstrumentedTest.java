@@ -13,6 +13,7 @@ import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,8 +37,10 @@ public class ExampleInstrumentedTest {
         HashMap<Integer, Integer> main = DateClass.getWeekOfMonth(32);
 
 //        assertEquals(c.get(Calendar.WEEK_OF_MONTH), 2);
-        assertEquals(main.get(8).intValue(), 1 );
+        Calendar cc =Calendar.getInstance();
+        String a = cc.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
 
+        assertEquals(a, "tset" );
 
     }
 
