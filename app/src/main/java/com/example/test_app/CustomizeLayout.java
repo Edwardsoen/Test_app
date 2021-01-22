@@ -29,32 +29,12 @@ public class CustomizeLayout {
     }
 
 
-    private void createMonthlyCustomization(){
-        Button text = card.findViewById(R.id.textColor3);
-        final String sharedPreferenceName = "graphConfig";
-        final String textKey = title + "textMonthlyGraphColor";
-        text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createColorPicker(textKey, sharedPreferenceName);
-            }
-        });
-
-    }
 
 
-    private void createWeeklyCustomization(){
+    private void createWeekCustomization(){
         final String sharedPreferenceName = "graphConfig";
         final String textKey = title + "textWeeklyGraphColor";
-
-        Button text = card.findViewById(R.id.textColorButton2);
         Button pieColor = card.findViewById(R.id.PieChartColorButton);
-        text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createColorPicker(textKey, sharedPreferenceName);
-            }
-        });
 
         pieColor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,16 +51,8 @@ public class CustomizeLayout {
         final String accentKey = title + "_accent";
         final String sharedPref = "cardConfig";
 
-
-        Button text = card.findViewById(R.id.cardtext);
         Button accent = card.findViewById(R.id.cardAccentButton);
         Button bg = card.findViewById(R.id.CardBackgroundButton);
-        text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createColorPicker(textKey, sharedPref);
-            }
-        });
         accent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +65,9 @@ public class CustomizeLayout {
                 createColorPicker(bgKey, sharedPref);
             }
         });
+    }
 
+    private void crateDayCustomization(){
 
     }
 
@@ -132,9 +106,8 @@ public class CustomizeLayout {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         ScrollView sc = new ScrollView(context);
         sc.addView(card);
-        createMonthlyCustomization();
         createCardCustomization();
-        createWeeklyCustomization();
+        createWeekCustomization();
         builder.setView(sc);
         builder.show();
     }

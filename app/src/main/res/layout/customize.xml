@@ -31,56 +31,29 @@
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
                     android:text="@string/Card"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:id="@+id/aa"
+                <Button
+                    android:id="@+id/cardAccentButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/CardAccentColor"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:backgroundTint="@android:color/transparent" />
 
-                    <Button
-                        android:id="@+id/cardtext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:clickable="false"
-                        android:gravity="center_vertical"
-                        android:text="@string/CardTextColor" />
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/CardBackgroundButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/CardBackground"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:backgroundTint="@android:color/transparent" />
 
-                    <Button
-                        android:id="@+id/cardAccentButton"
-                        android:layout_width="266dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/CardAccentColor" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/CardBackgroundButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/CardBackground" />
-
-                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -105,72 +78,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/Daily"
+                    android:text="@string/Day"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/InputTypeButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/InputType"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:backgroundTint="@android:color/transparent" />
 
-                    <Button
-                        android:id="@+id/textColorButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/TextColor" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/progressBarWidthButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/PgbarWidth"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:backgroundTint="@android:color/transparent"
+                    app:elevation="0dp" />
 
-                    <Button
-                        android:id="@+id/InputTypeButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/InputType" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/bgProgressBarButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/progressBarWidthButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/PgbarWidth" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/bgProgressBarButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/BackgroundPgBarWidth" />
-
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/BackgroundPgBarWidth"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:backgroundTint="@android:color/transparent" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -196,40 +137,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/Weekly"
+                    android:text="@string/Week"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/PieChartColorButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/textColorButton2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/TextColor" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/PieChartColorButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/PiechartColor" />
-
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/PiechartColor"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:backgroundTint="@android:color/transparent" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -250,47 +170,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView16"
+                <Button
+                    android:id="@+id/LineColorButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/Monthly"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/textMonth"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/textColor3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/TextColor" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/lineMonth"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/LineColorButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:text="@string/LineColor" />
-
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/RestoreDefault"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:backgroundTint="@android:color/transparent" />
 
             </LinearLayout>
 

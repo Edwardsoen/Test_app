@@ -53,4 +53,5 @@
     <string name="Day">Day</string>
     <string name="Week">Week</string>
     <string name="Month">Month</string>
+    <string name="RestoreDefault">Restore Default</string>
 </resources>
