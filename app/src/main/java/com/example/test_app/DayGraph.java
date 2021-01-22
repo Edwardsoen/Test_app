@@ -72,8 +72,8 @@ public class DayGraph  {
         final TextView dateText = main.findViewById(R.id.dateText);
         final  TextView descText = main.findViewById(R.id.textView6);
         //CIRBAR
-        final CircularProgressBar Main_cir = main.findViewById(R.id.circularProgressBar);
-        Main_cir.setProgressMax(daily_target);
+        final CircularProgressBar progressBar = main.findViewById(R.id.circularProgressBar);
+        progressBar.setProgressMax(daily_target);
         Button bot_button = main.findViewById(R.id.button2);
         Button leftArrowButton = card.findViewById(R.id.buttonn);
         final Button rightArrowButton = card.findViewById(R.id.nextButton);
@@ -101,12 +101,12 @@ public class DayGraph  {
         HashMap<String, String> dateString = DateClass.date_to_string(year, month, dateToday);
         dateText.setText(dateString.get("Day") + " " + dateToday + " "+  dateString.get("Month"));
         progressText.setText(amount.toString());
-        Main_cir.setProgress(amount.intValue());
+        progressBar.setProgress(amount.intValue());
         int progressPercentage = (int) ((amount.floatValue()/daily_target.floatValue())*100);
         descText.setText(amount + " of " + daily_target + ", " + progressPercentage + "% Complete");
 
         if(amount.intValue() >= daily_target){
-            Main_cir.setProgressBarColor(Color.GREEN);
+            progressBar.setProgressBarColor(Color.GREEN);
         }
 
 
@@ -157,15 +157,21 @@ public class DayGraph  {
         data.observeForever(new Observer<Float>() {
             @Override
             public void onChanged(Float aFloat) {
+                progressBar.setProgress(0);
                 int no = aFloat.intValue();
-                Main_cir.setProgress(no);
+                progressBar.setProgress(no);
+
                 int progressPercentage = (int) ((aFloat/daily_target.floatValue())*100);
                 HashMap<String, String> dateString = DateClass.date_to_string(c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DATE));
                 dateText.setText(dateString.get("Day") + " " + c.get(Calendar.DATE) + " "+  dateString.get("Month"));
                 progressText.setText(String.valueOf(no));
                 descText.setText(no + " of " + daily_target + ", " + progressPercentage + "% Complete");
-                if(no >= daily_target){
-                    Main_cir.setProgressBarColor(Color.GREEN);
+                if(progressPercentage >= 100){
+                    progressBar.setProgressBarColor(Color.GREEN);
+                }else {
+                    String color = "#512DA8";
+                    progressBar.setProgressBarColor(Color.parseColor(color));
+
                 }
 
             }
@@ -178,7 +184,6 @@ public class DayGraph  {
             public void onClick(View v) {
                 c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE)-1); //get the day before
                 getData(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
-                rightArrowButton.setClickable(true);
             }
         });
 
@@ -187,7 +192,6 @@ public class DayGraph  {
             public void onClick(View v) {
                 c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE)+ 1); //get the day before
                 if(c.get(Calendar.DATE) >= dateToday && c.get(Calendar.YEAR) >= year && c.get(Calendar.MONTH) >= month  ){
-                    rightArrowButton.setClickable(false);
                 }
                 getData(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
             }

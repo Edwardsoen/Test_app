@@ -91,7 +91,7 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
                     case 0:
                         data_layout.addView(dayGraph.createDailyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     case 1:
-                        data_layout.addView(weekGraph.createWeeklyLayout2(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        data_layout.addView(weekGraph.createWeekChart(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     case 2:
                         data_layout.addView(monthGraph.createMonthlyLayout(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         //data_layout.addView(GraphLayout.createWeeklyLayout(new HashMap<String, Integer>()), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -155,6 +155,7 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Context context = getContext();
@@ -173,8 +174,10 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
         sharedPreferences = getContext().getSharedPreferences("Main_data", Context.MODE_PRIVATE);
         scrollView.removeAllViews();
         lin.removeAllViews();

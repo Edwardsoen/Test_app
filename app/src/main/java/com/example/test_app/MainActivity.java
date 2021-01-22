@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity  {
         final Context context = getApplicationContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         Boolean bool = prefs.getBoolean("switch_preference_1", false);
+        new SQLFunctions(context).createTable();
         if(bool){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }

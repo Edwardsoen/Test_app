@@ -1,17 +1,20 @@
 package com.example.test_app;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -46,9 +49,28 @@ public class MonthGraph {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private int getColor(){
+        int blackColor = context.getColor(R.color.textBlack);
+        int whiteColor = context.getColor(R.color.textWhite);
+
+        int currentNightMode = context.getResources().getConfiguration().uiMode &
+                Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                return blackColor;
+            case Configuration.UI_MODE_NIGHT_YES:
+                return whiteColor;
+        }
+        return blackColor;
+    }
 
 
 
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void createPopupGraph(ArrayList<String> monthLabel, Integer xPressed){
         LayoutInflater inflater = LayoutInflater.from(context);
         ConstraintLayout card = (ConstraintLayout) inflater.inflate(R.layout.dialoggraph, null, false);
@@ -65,12 +87,6 @@ public class MonthGraph {
         lineChart.setScaleXEnabled(false);
         lineChart.setScaleYEnabled(false);
         lineChart.setPinchZoom(false);
-
-
-
-
-
-
         final ArrayList<Entry> entries = new ArrayList<>();
         final ArrayList<String> labels = new ArrayList();
         String month = monthLabel.get(xPressed);
@@ -104,21 +120,22 @@ public class MonthGraph {
 
 
 
-
-            String lineColor = getMonthlyGraphgCongfig();
-
-            lineChart.getAxisLeft().setTextColor(Color.parseColor(lineColor)); // left y-axis
-            lineChart.getXAxis().setTextColor(Color.parseColor(lineColor));
-            lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
-            lineChart.getAxisRight().setTextColor(Color.parseColor(lineColor));
-            lineChart.getDescription().setTextColor(Color.parseColor(lineColor));
-            lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
-
-            LineDataSet lineDataSet = new LineDataSet(entries, "labels");
+            LineDataSet lineDataSet = new LineDataSet(entries, "Amount x Date");
             final LineData lineData = new LineData(lineDataSet);
 
             lineData.setValueTextSize(12f);
-            lineData.setValueTextColor(Color.parseColor(lineColor));
+            int color = getColor();
+            lineData.setValueTextColor(color);
+            Description desc = new Description();
+            desc.setText(month);
+            lineChart.setDescription(desc);
+            lineChart.getDescription().setTextColor(color);
+            lineChart.getLegend().setTextColor(color);
+            lineChart.getXAxis().setTextColor(color);
+
+            lineChart.getAxisRight().setEnabled(false);
+            lineChart.getAxisLeft().setTextColor(color);
+
 
             lineChart.setData(lineData);
             ValueFormatter formatter = new ValueFormatter() {
@@ -179,6 +196,7 @@ public class MonthGraph {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public LinearLayout createMonthlyLayout(){
         final LinearLayout lin = new LinearLayout(context);
         final ViewGroup.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -204,22 +222,23 @@ public class MonthGraph {
         lineChart.setScaleYEnabled(false);
         lineChart.setPinchZoom(false);
 
-        String lineColor = getMonthlyGraphgCongfig();
 
-        lineChart.getAxisLeft().setTextColor(Color.parseColor(lineColor)); // left y-axis
-        lineChart.getXAxis().setTextColor(Color.parseColor(lineColor));
-        lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
-        lineChart.getAxisRight().setTextColor(Color.parseColor(lineColor));
-        lineChart.getDescription().setTextColor(Color.parseColor(lineColor));
-        lineChart.getLegend().setTextColor(Color.parseColor(lineColor));
-
-
-
-        LineDataSet lineDataSet = new LineDataSet(entries, "labels");
+        LineDataSet lineDataSet = new LineDataSet(entries, "Amount");
         final LineData lineData = new LineData(lineDataSet);
 
-        lineData.setValueTextColor(Color.parseColor(lineColor));
         lineData.setValueTextSize(12f);
+        int color = getColor();
+        lineData.setValueTextColor(color);
+        lineChart.getLegend().setTextColor(color);
+        lineChart.getXAxis().setTextColor(color);
+        lineChart.getAxisRight().setEnabled(false);
+        lineChart.getAxisLeft().setTextColor(color);
+        Description description = new Description();
+        description.setText("Monthly Data");
+        lineChart.setDescription(description);
+        lineChart.getDescription().setTextColor(color);
+
+
         lineChart.setData(lineData);
         ValueFormatter formatter = new ValueFormatter() {
             @Override
@@ -249,18 +268,6 @@ public class MonthGraph {
         });
         return lin;
     }
-
-    private String getMonthlyGraphgCongfig(){
-        String text = title + "textMonthlyGraphColor";
-        String textConfig =  CrudOperations.readStringData(text, sharedPreferenceName, context);
-        if (textConfig == null){
-            CrudOperations.SaveStringData(text, "#000000", sharedPreferenceName, context);
-            textConfig =  CrudOperations.readStringData(text, sharedPreferenceName, context);
-        }
-        return textConfig;
-    }
-
-
 
 
 }

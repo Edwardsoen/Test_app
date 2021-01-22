@@ -50,4 +50,7 @@
     <string name="PiechartColor">Piechart Color list </string>
     <string name="Monthly">Monthly</string>
     <string name="LineColor">Line Color</string>
+    <string name="Day">Day</string>
+    <string name="Week">Week</string>
+    <string name="Month">Month</string>
 </resources>

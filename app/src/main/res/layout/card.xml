@@ -36,17 +36,17 @@
                 android:id="@+id/tab1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Monday" />
+                android:text="@string/Day" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tuesday" />
+                android:text="@string/Week" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Wednesday" />
+                android:text="@string/Month" />
         </com.google.android.material.tabs.TabLayout>
 
     </LinearLayout>
