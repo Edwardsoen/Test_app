@@ -54,4 +54,10 @@
     <string name="Week">Week</string>
     <string name="Month">Month</string>
     <string name="RestoreDefault">Restore Default</string>
+    <string name="Selectcolor1">Select Color 1</string>
+    <string name="Selectcolor2">Select Color 2</string>
+    <string name="Selectcolor3">Select Color 3</string>
+    <string name="Selectcolor4">Select Color 4</string>
+    <string name="Selectcolor5">Select Color 5</string>
+
 </resources>

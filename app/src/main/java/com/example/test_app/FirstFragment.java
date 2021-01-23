@@ -50,12 +50,8 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         // Inflate the layout for this fragment
         prefs = getContext().getSharedPreferences("Main_data", Context.MODE_PRIVATE);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        configPrefs = getContext().getSharedPreferences("cardConfig", Context.MODE_PRIVATE);
+        configPrefs = getContext().getSharedPreferences("Config", Context.MODE_PRIVATE);
         configPrefs.registerOnSharedPreferenceChangeListener(this);
-        SharedPreferences graphConfigPrefs = getContext().getSharedPreferences("graphConfig", Context.MODE_PRIVATE);
-        graphConfigPrefs.registerOnSharedPreferenceChangeListener(this);
-//        configPrefs.registerOnSharedPreferenceChangeListener( );
-
         return inflater.inflate(R.layout.fragment_first, container, false);
 
     }
@@ -67,8 +63,6 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public MaterialCardView create_card(final Context context, final String title){
-
-
 
 
         final DayGraph dayGraph = new DayGraph(context, title);
@@ -85,6 +79,7 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
 
 
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch(tab.getPosition()){ //TODO: CHANGE LAYOUT TO NON-STATIC
@@ -119,13 +114,22 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         card.setCheckable(true);
         card.setFocusable(true);
 
-//
-//        HashMap<String, Integer> colorMap = readCardConfig(context, title);
-//        tablayout.setBackgroundColor(colorMap.get("bg"));
-//        card.setBackgroundColor(colorMap.get("bg"));
-//        tablayout.setSelectedTabIndicatorColor(colorMap.get("accent"));
-//        tablayout.setTabTextColors(colorMap.get("text"), colorMap.get("accent"));
-//        title_tv.setTextColor(colorMap.get("text"));
+        HashMap<String, Integer> config = readCardConfig(context, title);
+        String bgKey = title + "_bg";
+        String accentKey = title + "_accent";
+
+        if(config.containsKey(bgKey)){
+            card.setBackgroundColor(config.get(bgKey));
+            tablayout.setBackgroundColor(config.get(bgKey));
+        }
+        if (config.containsKey(accentKey)){
+        tablayout.setSelectedTabIndicatorColor(config.get(accentKey));
+        tablayout.setTabTextColors(config.get(accentKey)+ 100, config.get(accentKey)  ); //TODO: THIS<<<<<<
+        }
+
+
+
+
 
 
         return card;
@@ -191,35 +195,20 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
 
 
 
-
-    private static void generateDefaultCardConfig(Context context, String title){
-        String sharedPrefName = "cardConfig";
-        String bgKey = title + "_bg";
-        String textKey = title + "_text";
-        String accentKey = title + "_accent";
-        CrudOperations.SaveStringData(bgKey,"#ffffff",sharedPrefName,context);
-        CrudOperations.SaveStringData(textKey,"#000000",sharedPrefName,context);
-        CrudOperations.SaveStringData(accentKey,"#000099",sharedPrefName,context);
-    }
-
-
     private static HashMap<String, Integer> readCardConfig(Context context, String title){
         HashMap<String, Integer> data = new HashMap<>();
-        String sharedPrefName = "cardConfig";
+        String sharedPrefName = "Config";
         String bgKey = title + "_bg";
-        String textKey = title + "_text";
         String accentKey = title + "_accent";
         String bgHex = CrudOperations.readStringData(bgKey, sharedPrefName, context);
-        if(bgHex == null){
-            generateDefaultCardConfig(context, title);
-            bgHex = CrudOperations.readStringData(bgKey, sharedPrefName, context);
-        }
         String accentHex = CrudOperations.readStringData(accentKey, sharedPrefName, context);
-        String textHex = CrudOperations.readStringData(textKey, sharedPrefName, context);
-        data.put("bg", Color.parseColor(bgHex));
-        data.put("text", Color.parseColor(textHex));
-        data.put("accent",Color.parseColor( accentHex));
+        if(bgHex != null){
+            data.put(bgKey, Color.parseColor(bgHex));
+        }if(accentHex!= null){
+            data.put(accentKey ,Color.parseColor(accentHex));
+        }
         return data;
-
     }
+
+
 }

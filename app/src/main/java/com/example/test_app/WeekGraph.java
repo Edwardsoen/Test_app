@@ -52,7 +52,7 @@ public class WeekGraph {
 
 
     WeekGraph(final Context context,final String title){
-        this.sharedPreferenceName = "graphConfig";
+        this.sharedPreferenceName = "Config";
         this.context = context;
         this.title = title;
         this.SQLFunctions = new SQLFunctions(context);
@@ -116,6 +116,26 @@ public class WeekGraph {
 
 
 
+    private HashMap<String, Integer> readConfig(){
+//        final String pieColorKey1 = title + "_pieColor1";
+//        final String pieColorKey2 = title + "_pieColor2";
+//        final String pieColorKey3 = title + "_pieColor3";
+//        final String pieColorKey4 = title + "_pieColor4";
+//        final String pieColorKey5 = title + "_pieColor5";
+
+        HashMap<String, Integer> data = new HashMap<>();
+        for(int i =1;  i <= 5;  i ++){
+            String key = title + "_pieColor"+i;
+            String color = CrudOperations.readStringData(key, sharedPreferenceName, context);
+            if(color!= null){
+                data.put(key ,Color.parseColor(color));
+            }
+        }
+        return data;
+
+
+    }
+
     public LinearLayout createWeekChart(){
         LayoutInflater inflater = LayoutInflater.from(context);
         ConstraintLayout card = (ConstraintLayout) inflater.inflate(R.layout.card_week, null, false);
@@ -127,16 +147,27 @@ public class WeekGraph {
 
 
 //        final LinearLayout lin = new LinearLayout(context);
-        final ArrayList<Integer> colors = new ArrayList<>(); //TODO: //OPTIMIZE THIS
+        final ArrayList<Integer> colors = new ArrayList<>();
         final ViewGroup.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         final Button btn = lin.findViewById(R.id.btnLeft);
         final Button btn2 = lin.findViewById(R.id.btnRight);
         final TextView textView = lin.findViewById(R.id.weekTextView);
+
+        HashMap<String, Integer> colorData = readConfig();
+
+
+        for(int i =1;  i <= 5;  i ++) {
+            String key = title + "_pieColor" + i;
+            if (colorData.containsKey(key)){
+                colors.add(colorData.get(key));
+            }
+        }
         colors.add(Color.LTGRAY);
         colors.add(Color.CYAN);
         colors.add(Color.YELLOW);
         colors.add(Color.MAGENTA);
         colors.add(Color.GREEN);
+        colors.add(Color.BLACK);
 
         monthData.observeForever(new Observer<ArrayList<Integer>>() {
             @RequiresApi(api = Build.VERSION_CODES.M)

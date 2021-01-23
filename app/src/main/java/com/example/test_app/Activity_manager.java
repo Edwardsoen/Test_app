@@ -54,10 +54,13 @@ public class Activity_manager {
         customize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (radiogroup.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(context, "SELECT ITEM", Toast.LENGTH_LONG ).show();
+                }else {
                 String title = radio_name_id_map.get(radiogroup.getCheckedRadioButtonId());
                 CustomizeLayout c = new CustomizeLayout(context, title);
                 c.generateLayout();
-            }
+            }}
         });
 
         edit.setOnClickListener(new View.OnClickListener() {

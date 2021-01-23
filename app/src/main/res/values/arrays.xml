@@ -18,7 +18,10 @@
 
     <string-array name="Activities_val">
         <item>test_val</item>
+    </string-array>
 
-
+    <string-array name="InputType">
+        <item>EditText</item>
+        <item>Slider</item>
     </string-array>
 </resources>
