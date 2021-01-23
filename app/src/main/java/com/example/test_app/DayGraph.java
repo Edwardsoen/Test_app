@@ -131,7 +131,6 @@ public class DayGraph<data> {
         final String pgbarSizeKey = title +"_pgbarSize";
 
         final String inputMaxKey = title + "_inputMax";
-        final String inputStepKey = inputMaxKey + "Step";
         final String inputTypeKey = title + "_inputType";
 
 
@@ -190,9 +189,7 @@ public class DayGraph<data> {
                             editTextInput();
                             break;
                         case 1:
-                            sliderInput(config.get(inputMaxKey), config.get(inputStepKey));
-                            break;
-                        case 2:
+                            sliderInput(config.get(inputMaxKey));
                             break;
                     }
                 }else {
@@ -200,13 +197,6 @@ public class DayGraph<data> {
                 }
             }
         });
-
-
-
-
-
-
-
 
 
         data.observeForever(new Observer<Float>() {
@@ -263,16 +253,13 @@ public class DayGraph<data> {
 
 
 
-    private void scrollableNumberInput(){
 
-    }
-
-    private void sliderInput(int max, int step){
+    private void sliderInput(int max){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         final Slider slider = new Slider(context);
-        slider.setValue(2f);
+        slider.setValue(1f);
 
-        slider.setValueFrom(1.0f);
+        slider.setValueFrom(0f);
         slider.setValueTo((float) max);
         slider.setStepSize(1f);
 
@@ -290,7 +277,6 @@ public class DayGraph<data> {
                     SQLFunctions.updateData(title, currentProgress, dateRange.get("Start"), dateRange.get("End"));
                 }
                 catch (Exception e){
-//                            Long pgData = Long.valueOf(0);
                     int currentProgress = newData;
                     SQLFunctions.insertData(c.getTime().getTime(),title, currentProgress );
                 }

@@ -39,11 +39,6 @@ public class CustomizeLayout {
 
 
 
-
-
-
-
-
     private void createWeekCustomization(){ //TODO: OPTIMIZE THIS FUNCTION <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         final String pieColorKey1 = title + "_pieColor1";
         final String pieColorKey2 = title + "_pieColor2";
@@ -118,7 +113,6 @@ public class CustomizeLayout {
         });
     }
 
-
     private void createCardCustomization(){
         final String bgKey = title + "_bg";
         final String accentKey = title + "_accent";
@@ -140,12 +134,10 @@ public class CustomizeLayout {
     }
 
 
-
     private void createDayCustomization() {
         final String pgBarBackgroundSizeKey = title + "_pgBarBackgroundSize";
         final String pgbarSizeKey = title + "_pgbarSize";
         final String inputMaxKey = title + "_inputMax";
-        final String inputStepKey = inputMaxKey + "Step";
         final String inputTypeKey = title + "_inputType";
 
 
@@ -227,6 +219,7 @@ public class CustomizeLayout {
         alertDialog.show();
     }
 
+
     private void createNumberEditTextDialog(String title, final String sharedprefName, final String key){
         final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         builder.setTitle(title);
@@ -259,10 +252,6 @@ public class CustomizeLayout {
     }
 
 
-
-
-
-
     private void createColorPicker(final String key, final String sharedPref){
         ColorPickerDialogBuilder
                 .with(context)
@@ -287,6 +276,47 @@ public class CustomizeLayout {
     }
 
 
+    private  void createResetConfig(){ //TODO: ASUHDJASBLJKDHSKJLDHASJKLDHnKLHJ
+        Button reset = card.findViewById(R.id.restoreDefaultButton);
+        final String pgBarBackgroundSizeKey = title + "_pgBarBackgroundSize";
+        final String pgbarSizeKey = title + "_pgbarSize";
+        final String inputMaxKey = title + "_inputMax";
+        final String inputTypeKey = title + "_inputType";
+        final String bgKey = title + "_bg";
+        final String accentKey = title + "_accent";
+        final String pieColorKey1 = title + "_pieColor1";
+        final String pieColorKey2 = title + "_pieColor2";
+        final String pieColorKey3 = title + "_pieColor3";
+        final String pieColorKey4 = title + "_pieColor4";
+        final String pieColorKey5 = title + "_pieColor5";
+
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrudOperations.deleteData(pgBarBackgroundSizeKey, sharedprefName, context);
+                CrudOperations.deleteData(pgbarSizeKey, sharedprefName, context);
+                CrudOperations.deleteData(inputMaxKey, sharedprefName, context);
+                CrudOperations.deleteData(inputTypeKey, sharedprefName, context);
+                CrudOperations.deleteData(bgKey, sharedprefName, context);
+                CrudOperations.deleteData(accentKey, sharedprefName, context);
+                CrudOperations.deleteData(pieColorKey1, sharedprefName, context);
+                CrudOperations.deleteData(pieColorKey2, sharedprefName, context);
+                CrudOperations.deleteData(pieColorKey3, sharedprefName, context);
+                CrudOperations.deleteData(pieColorKey4, sharedprefName, context);
+                CrudOperations.deleteData(pieColorKey5, sharedprefName, context);
+
+
+            }
+        });
+
+
+
+
+
+
+    }
+
 
     public void generateLayout(){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
@@ -295,6 +325,7 @@ public class CustomizeLayout {
         createCardCustomization();
         createWeekCustomization();
         createDayCustomization();
+        createResetConfig();
         builder.setView(sc);
         builder.show();
     }

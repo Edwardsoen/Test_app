@@ -115,7 +115,7 @@
                 android:isScrollContainer="true"
                 app:icon="@android:drawable/ic_input_add"
                 app:iconGravity="textEnd"
-                app:iconSize="30dp"
+                app:iconSize="50dp"
                 app:iconTint="@color/colorPrimaryDark" />
 
 

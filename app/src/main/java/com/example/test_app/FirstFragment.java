@@ -110,9 +110,6 @@ public class FirstFragment extends Fragment implements SharedPreferences.OnShare
         title_tv.setText(title);
         final MaterialCardView card = new MaterialCardView(context);
         card.addView(card_layout);
-        card.setClickable(true);
-        card.setCheckable(true);
-        card.setFocusable(true);
 
         HashMap<String, Integer> config = readCardConfig(context, title);
         String bgKey = title + "_bg";
